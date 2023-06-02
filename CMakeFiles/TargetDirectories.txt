@@ -1,0 +1,3 @@
+C:/Users/Zorik/Documents/Visual Studio 2022/Projects/Enigma/CMakeFiles/Enigma.dir
+C:/Users/Zorik/Documents/Visual Studio 2022/Projects/Enigma/CMakeFiles/ALL_BUILD.dir
+C:/Users/Zorik/Documents/Visual Studio 2022/Projects/Enigma/CMakeFiles/ZERO_CHECK.dir

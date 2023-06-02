@@ -1,0 +1,44 @@
+#pragma once
+
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
+#include <unordered_map>
+#include <string>
+
+std::unordered_map<std::string, std::string> ROTOR_LIST = {
+	// name						// hash
+	{"Commercial Enigma IC",	"DMTWSILRUYQNKFEJCAZBPGXOHV	QQ"},
+	{"Commercial Enigma IIC",	"HQZGPJTMOBLNCIFDYAWVEUSRKX	EE"},
+	{"Commercial Enigma IIIC",	"UQNTLSZFMREHDPXKIBVYGJCWOA	VV"},
+
+	{"Railway Rocket I",		"JGDQOXUSCAMIFRVTPNEWKBLZYH	QQ"},
+	{"Railway Rocket II",		"NTZPSFBOKMWRCJDIVLAEYUXHGQ	EE"},
+	{"Railway Rocket III",		"JVIUBHTCDYAKEQZPOSGXNRMWFL	VV"},
+
+	{"Swiss K I - K",			"PEZUOHXSCVFMTBGLRINQJWAYDK	QQ"},
+	{"Swiss K II - K",			"ZOUESYDKFWPCIQXHMVBLGNJRAT	EE"},
+	{"Swiss K III - K",			"EHRVXGAOBQUSIMZFLYNWKTPDJC	VV"},
+
+	{"Enigma I I",				"EKMFLGDQVZNTOWYHXUSPAIBRCJ	QQ"},
+	{"Enigma I II",				"AJDKSIRUXBLHWTMCQGZNPYFVOE	EE"},
+	{"Enigma I III",			"BDFHJLCPRTXVZNYEIWGAKMUSQO	VV"},
+	{"M3 Army IV",				"ESOVPZJAYQUIRHXLNFTGKDCMWB	JJ"},
+	{"M3 Army V",				"VZBRGITYUPSDNHLXAWMJQOFECK	ZZ"},
+	{"M3& M4 Naval VI",			"JPGVOUMFYQBENHZRDKASXLICTW	ZM"},
+	{"M3& M4 Naval VII",		"NZJHGRCXMYSWBOUFAIVLPEKQDT	ZM"},
+	{"M3& M4 Naval VIII",		"FKQHTLXOCBJSPDZRAMEWNIUYGV	ZM"},
+};
+
+std::unordered_map<std::string, std::string> REFLECTOR_LIST = {
+	// name						// hash
+	{"Swiss K UKW - K",			"IMETCGFRAYSQBZXWLHKDVUPOJN"},
+	{"Railway Rocket UKW",		"QYHOGNECVPUZTFDJAXWMKISRBL"},
+	{"Reflector A",				"EJMZALYXVBWFCRQUONTSPIKHGD"},
+	{"Reflector B",				"YRUHQSLDPXNGOKMIEBFZCWVJAT"},
+	{"Reflector C",				"FVPJIAOYEDRZXWGCTKUQSBNMHL"},
+	{"M4 R1 Reflector B Thin",	"ENKQAUYWJICOPBLMDXZVFTHRGS"},
+	{"M4 R1 Reflector C Thin",	"RDOBJNTKVEHMLFCWZAXGYIPSUQ"}
+};
+
+#endif // !GLOBAL_H
