@@ -1,0 +1,8 @@
+set(ImGui
+    imgui.h
+    imgui.cpp
+    imgui_impl_glfw.h
+    imgui_impl_glfw.cpp
+    imgui_impl_opengl3.h
+    imgui_impl_opengl3.cpp
+)
