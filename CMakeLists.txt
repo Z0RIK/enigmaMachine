@@ -11,12 +11,22 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .so and .dy
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .lib and .a
 
 include(src/CMakeLists.txt)
+include(external/imgui/CMakeLists.txt)
+include(external/stb/CMakeLists.txt)
 
-##foreach(FILE ${FILES})
-##	set(srcFiles ${srcFiles} src/${FILE})
-##endforeach()
+foreach(FILE ${FILES})
+	set(srcFiles ${srcFiles} src/${FILE})
+endforeach()
 
-add_executable (Enigma  ${srcFiles} ${ImGui} ${stb})
+foreach(FILE ${ImGui})
+  set(srcFiles ${srcFiles} external/imgui/${FILE})
+endforeach()
+
+foreach(FILE ${stb})
+  set(srcFiles ${srcFiles} external/imgui/${FILE})
+endforeach()
+
+add_executable (Enigma  ${srcFiles})
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Enigma PROPERTY CXX_STANDARD 20)
