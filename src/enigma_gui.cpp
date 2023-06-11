@@ -5,7 +5,17 @@
 #include <stb/stb_image.h>
 
 int WIDTH = 960;
-int HEIGHT = 480;
+int HEIGHT = 520;
+
+// imgui related variables
+static const char u8_one = 1;
+static const char* plugboardTooltip = 
+	"The plugboard allows you to swap letters before and after they pass through the Enigma rotors.\n"
+	"You can enter pairs of characters separated by a spacebar to add them to the plugboard.\n"
+	"For example, 'AB CD EF' would swap A with B, C with D, and E with F.\n"
+	"You can have up to 13 pairs in the plugboard.\n"
+	"Each letter can only be included in one pair, and duplicates will be ignored.\n"
+	"Note: Non-alphabetic characters and pairs exceeding the limit will be ignored.\n";
 
 Texture::Texture(const char* path) 
 {
@@ -57,8 +67,6 @@ GLFWwindow* init()
 	const char* glsl_version = "#version 130";
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Enigma", nullptr, nullptr);
@@ -73,7 +81,7 @@ GLFWwindow* init()
 
 	if (!gladLoadGL(glfwGetProcAddress))
 	{
-		std::cout << "ERROR::GLAD::Failed to initialize GLAD" << std::endl;
+		std::cerr << "ERROR::GLAD::Failed to initialize GLAD" << std::endl;
 		return nullptr;
 	}
 
@@ -91,6 +99,18 @@ GLFWwindow* init()
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	return window;
+}
+
+static void HelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort) && ImGui::BeginTooltip())
+	{
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 }
 
 void glfwResizeWindowCallback(GLFWwindow* window, int width, int height)
@@ -160,16 +180,8 @@ void configurationWindow(
 	ImGui::SameLine(ImGui::GetWindowWidth() / 2.0f - logo.width / 4.0f);
 	ImGui::Image((void*)(intptr_t)logo.id, ImVec2(logo.width * .5f, logo.height * .5f));
 
-	ImGui::SeparatorText("Configuration");
+	ImGui::SeparatorText("Reflector");
 
-	ImGui::SetNextItemWidth(75.0f);
-	ImGui::InputInt("Number of rotors", &numberOfRotors);
-	Enigma_machine::getInstance().setRotorCount((uint8_t)numberOfRotors);
-	rotorKeys.resize(Enigma_machine::getInstance().getRotorCount(), ROTOR_LIST.begin()->first);
-	offsets.resize(Enigma_machine::getInstance().getRotorCount());
-
-	ImGui::Spacing();
-	ImGui::Separator();
 	ImGui::Spacing();
 
 	// setting reflector key
@@ -185,6 +197,21 @@ void configurationWindow(
 		ImGui::EndPopup();
 	}
 
+	ImGui::Spacing();
+
+	ImGui::SeparatorText("Rotor configuration");
+
+	ImGui::Spacing();
+
+	// resizing rotor vector
+	ImGui::SetNextItemWidth(75.0f);
+	ImGui::InputScalar("Number of rotors", ImGuiDataType_U8, &numberOfRotors, &u8_one, NULL, "%d");
+	numberOfRotors = std::max(1, numberOfRotors);
+	Enigma_machine::getInstance().setRotorCount((uint8_t)numberOfRotors);
+	rotorKeys.resize(Enigma_machine::getInstance().getRotorCount(), ROTOR_LIST.begin()->first);
+	offsets.resize(Enigma_machine::getInstance().getRotorCount());
+
+	ImGui::Spacing();
 	ImGui::Spacing();
 	ImGui::Separator();
 
@@ -206,7 +233,8 @@ void configurationWindow(
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(75.0f);
-		ImGui::InputInt(("Offset " + std::to_string(i + 1)).c_str(), &offsets[i]);
+		ImGui::InputScalar(("Offset " + std::to_string(i + 1)).c_str(), ImGuiDataType_U8, &offsets[i], &u8_one, NULL, "%d");
+		offsets[i] %= 26;
 
 		ImGui::Spacing();
 		ImGui::Separator();
@@ -214,8 +242,15 @@ void configurationWindow(
 
 	ImGui::Spacing();
 
-	ImGui::InputText("Plugboard", plugboard, 13 * 3);
+	ImGui::SeparatorText("Plugboard");
 
+	ImGui::Spacing();
+
+	ImGui::InputText(" ", plugboard, 13 * 3);
+	ImGui::SameLine();
+	HelpMarker(plugboardTooltip);
+
+	ImGui::Spacing();
 	ImGui::Spacing();
 	ImGui::Separator();
 

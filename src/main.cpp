@@ -75,7 +75,6 @@ int main() {
 		ImGui::SetNextWindowPos(ImVec2(frameW / 3.0f * 2, 0.0f));
 		ImGui::SetNextWindowSize(ImVec2(frameW / 3.0f, frameH));
 		outputTextWindow(outputText, textBufferSize);
-		
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGui::Render();
