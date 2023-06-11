@@ -60,6 +60,7 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+
 		// input window
 		ImGui::SetNextWindowPos(ImVec2(frameW / 3.0f * 0, 0.0f));
 		ImGui::SetNextWindowSize(ImVec2(frameW / 3.0f, frameH));

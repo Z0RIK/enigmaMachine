@@ -1,6 +1,9 @@
 #include "enigma_gui.h"
 #include "enigma_global.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+
 int WIDTH = 960;
 int HEIGHT = 480;
 
@@ -58,9 +61,6 @@ GLFWwindow* init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-	glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
-	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_FALSE);
-
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Enigma", nullptr, nullptr);
 	if (!window)
 	{
@@ -70,6 +70,12 @@ GLFWwindow* init()
 
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
+
+	if (!gladLoadGL(glfwGetProcAddress))
+	{
+		std::cout << "ERROR::GLAD::Failed to initialize GLAD" << std::endl;
+		return nullptr;
+	}
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

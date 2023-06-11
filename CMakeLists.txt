@@ -1,35 +1,46 @@
-﻿# CMakeList.txt: проект CMake для Enigma; включите исходный код и определения,
-# укажите здесь логику для конкретного проекта.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
-project ("Enigma")
+project (Enigma C CXX)
 
-# Setup output directories.
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Setup output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/bin") # .exe and .dll
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .so and .dylib
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .lib and .a
 
-include(src/CMakeLists.txt)
-include(external/imgui/CMakeLists.txt)
-include(external/stb/CMakeLists.txt)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/deps)
 
-foreach(FILE ${FILES})
-	set(srcFiles ${srcFiles} src/${FILE})
-endforeach()
+add_executable (Enigma
+  src/main.cpp
+  src/enigma_machine.h
+  src/enigma_machine.cpp
+  src/enigma_rotor.cpp
+  src/enigma_rotor.h
+  src/enigma_gui.cpp
+  src/enigma_gui.h
+  src/enigma_global.h)
 
-foreach(FILE ${ImGui})
-  set(srcFiles ${srcFiles} external/imgui/${FILE})
-endforeach()
+target_link_libraries(Enigma PRIVATE app_external_deps)
 
-foreach(FILE ${stb})
-  set(srcFiles ${srcFiles} external/imgui/${FILE})
-endforeach()
+target_include_directories(Enigma PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/imgui
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/gl/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/stb)
 
-add_executable (Enigma  ${srcFiles})
+if(WIN32)
+  set_target_properties(${PROJECT_NAME}
+  PROPERTIES
+      LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE"
+      LINK_FLAGS_RELEASE "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+      LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+      LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+  )
+endif(WIN32)
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Enigma PROPERTY CXX_STANDARD 20)
-endif()
-
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+file(
+  COPY ${CMAKE_SOURCE_DIR}/Logo.png
+  DESTINATION ${CMAKE_BINARY_DIR}/bin)

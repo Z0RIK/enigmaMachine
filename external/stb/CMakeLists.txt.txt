@@ -1,4 +1,0 @@
-set(stb
-    imgui_stdlib.h
-    imgui_stdlib.cpp
-)
