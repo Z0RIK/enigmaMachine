@@ -4,9 +4,10 @@
 #define GLOBAL_H
 
 #include <unordered_map>
+#include <map>
 #include <string>
 
-std::unordered_map<std::string, std::string> ROTOR_LIST = {
+std::map<std::string, std::string> ROTOR_LIST = {
 	// name						// hash
 	{"Commercial Enigma IC",	"DMTWSILRUYQNKFEJCAZBPGXOHV	QQ"},
 	{"Commercial Enigma IIC",	"HQZGPJTMOBLNCIFDYAWVEUSRKX	EE"},
@@ -30,7 +31,7 @@ std::unordered_map<std::string, std::string> ROTOR_LIST = {
 	{"M3& M4 Naval VIII",		"FKQHTLXOCBJSPDZRAMEWNIUYGV	ZM"},
 };
 
-std::unordered_map<std::string, std::string> REFLECTOR_LIST = {
+std::map<std::string, std::string> REFLECTOR_LIST = {
 	// name						// hash
 	{"Swiss K UKW - K",			"IMETCGFRAYSQBZXWLHKDVUPOJN"},
 	{"Railway Rocket UKW",		"QYHOGNECVPUZTFDJAXWMKISRBL"},
