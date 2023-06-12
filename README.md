@@ -1,8 +1,6 @@
 # Enigma Machine
 This is a graphical user interface (GUI) application for the Enigma machine, a historical encryption device used during World War II. The application allows users to configure the Enigma machine with various settings, such as rotor selection, plugboard connections, and reflector type. Users can then input plaintext and obtain the corresponding ciphertext.
 
-![image](https://github.com/Z0RIK/enigmaMachine/assets/113785827/6db1d2d8-1dae-42b9-832f-7998b3a22eba)
-
 ## Features
 &#9632; Interactive GUI for configuring the Enigma machine.
 
