@@ -23,7 +23,7 @@ Clone the repository:
 git clone --recurse-submodules https://github.com/Z0RIK/enigmaMachine.git
 ```
 
-This repository contains GLFW and ImGui submodules, thats why `--recurse-submodules` has to be used.
+This repository contains GLFW and ImGui submodules, that is why `--recurse-submodules` has to be used.
 Other than that bussines as usual.
 
 Create and enter build directory:
